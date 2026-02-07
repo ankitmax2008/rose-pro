@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Rose Day</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Dancing Script', cursive; /* Romantic cursive font */
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%); /* Soft pink gradient background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            border: 3px solid #ffb6c1; /* Light pink border for the main container */
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            max-width: 90vw; /* Responsive width */
+            max-height: 90vh; /* Responsive height */
+        }
+
+        .tap-message {
+            font-size: 18px;
+            color: #d63384; /* Romantic red-pink color */
+            margin-bottom: 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .rose {
+            width: 250px;
+            height: 250px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .rose:hover {
+            transform: scale(1.1);
+        }
+
+        .message-popup {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #ff69b4; /* Soft pink border for popup */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            font-size: 24px;
+            color: #d63384; /* Romantic red-pink color */
+            animation: fadeIn 2s ease-in-out;
+            display: none; /* Initially hidden */
+            z-index: 10;
+        }
+
+        .poem {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            border: 3px solid #dc143c; /* Romantic red border for poem */
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+            font-size: 18px;
+            color: #8b0000; /* Deep red for poem */
+            line-height: 1.6;
+            white-space: pre-line;
+            display: none; /* Initially hidden */
+            max-width: 400px;
+            z-index: 20;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        /* Heart animations in background for extra romance */
+        .heart {
+            position: absolute;
+            color: #ff69b4;
+            font-size: 20px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .heart:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .heart:nth-child(2) { top: 20%; right: 15%; animation-delay: 1s; }
+        .heart:nth-child(3) { bottom: 20%; left: 20%; animation-delay: 2s; }
+        .heart:nth-child(4) { bottom: 10%; right: 10%; animation-delay: 3s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Media queries for phone-friendliness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+                max-width: 95vw;
+                max-height: 95vh;
+            }
+            .tap-message {
+                font-size: 16px;
+                margin-bottom: 15px;
+            }
+            .rose {
+                width: 200px;
+                height: 200px;
+            }
+            .message-popup {
+                font-size: 20px;
+                padding: 15px;
+                top: 15%;
+            }
+            .poem {
+                font-size: 16px;
+                padding: 20px;
+                max-width: 90vw;
+            }
+            .heart {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tap-message {
+                font-size: 14px;
+            }
+            .rose {
+                width: 150px;
+                height: 150px;
+            }
+            .message-popup {
+                font-size: 18px;
+                padding: 10px;
+            }
+            .poem {
+                font-size: 14px;
+                padding: 15px;
+            }
+            .heart {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Floating hearts for romantic effect -->
+        <div class="heart">❤️</div>
+        <div class="heart">💖</div>
+        <div class="heart">🌹</div>
+        <div class="heart">💕</div>
+
+        <!-- Initial message popup -->
+        <div class="message-popup" id="messagePopup">
+            WISH YOU A HAPPY ROSE DAY MY LOVE 💕
+        </div>
+
+        <!-- Tap on Rose message -->
+        <div class="tap-message" id="tapMessage">
+            Tap on Rose
+        </div>
+
+        <!-- Anime-style Rose SVG (more detailed and beautiful) -->
+        <svg class="rose" id="rose" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <radialGradient id="petalGradient" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" style="stop-color:#ff69b4;stop-opacity:1" />
+                    <stop offset="70%" style="stop-color:#ff1493;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#dc143c;stop-opacity:1" />
+                </radialGradient>
+                <radialGradient id="centerGradient" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" style="stop-color:#ffff00;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#ffd700;stop-opacity:1" />
+                </radialGradient>
+            </defs>
+            <!-- Outer petals -->
+            <ellipse cx="100" cy="80" rx="30" ry="50" fill="url(#petalGradient)" transform="rotate(0 100 100)" />
+            <ellipse cx="130" cy="100" rx="30" ry="50" fill="url(#petalGradient)" transform="rotate(45 100 100)" />
+            <ellipse cx="100" cy="130" rx="30" ry="50" fill="url(#petalGradient)" transform="rotate(90 100 100)" />
+            <ellipse cx="70" cy="100" rx="30" ry="50" fill="url(#petalGradient)" transform="rotate(135 100 100)" />
+            <!-- Inner petals for anime-style fullness -->
+            <ellipse cx="100" cy="85" rx="20" ry="35" fill="url(#petalGradient)" transform="rotate(22.5 100 100)" />
+            <ellipse cx="115" cy="100" rx="20" ry="35" fill="url(#petalGradient)" transform="rotate(67.5 100 100)" />
+            <ellipse cx="100" cy="115" rx="20" ry="35" fill="url(#petalGradient)" transform="rotate(112.5 100 100)" />
+            <ellipse cx="85" cy="100" rx="20" ry="35" fill="url(#petalGradient)" transform="rotate(157.5 100 100)" />
+            <!-- Center -->
+            <circle cx="100" cy="100" r="15" fill="url(#centerGradient)" />
+            <!-- Stem -->
+            <rect x="95" y="115" width="10" height="60" fill="#228B22" rx="5" />
+            <!-- Leaves -->
+            <ellipse cx="85" cy="140" rx="15" ry="8" fill="#32CD32" transform="rotate(-30 85 140)" />
+            <ellipse cx="115" cy="150" rx="15" ry="8" fill="#32CD32" transform="rotate(30 115 150)" />
+        </svg>
+
+        <!-- Poem container -->
+        <div class="poem" id="poem">
+            My love, I know I caused you pain,<br>
+            And anger found its way again.<br>
+            I’m sorry for the words I missed,<br>
+            For moments lost, for fragile bliss.<br>
+            <br>
+            Still, my heart beats just for you,<br>
+            In every wrong, my love stayed true.<br>
+            Please take my hand, let wounds depart—<br>
+            I’m yours in soul, I’m yours in heart.
+        </div>
+    </div>
+
+    <script>
+        // Show the initial message popup on page load
+        window.onload = function() {
+            document.getElementById('messagePopup').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('messagePopup').style.display = 'none';
+            }, 3000); // Hide after 3 seconds
+        };
+
+        // Add click event to the rose to show the poem
+        document.getElementById('rose').addEventListener('click', function() {
+            document.getElementById('poem').style.display = 'block';
+            document.getElementById('tapMessage').style.display = 'none'; // Hide tap message after click
+        });
+    </script>
+</body>
+</html>
